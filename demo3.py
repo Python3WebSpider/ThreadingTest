@@ -1,26 +1,25 @@
 import threading
 import time
 
-count = 0
-
 
 class MyThread(threading.Thread):
-    def __init__(self):
+    def __init__(self, second):
         threading.Thread.__init__(self)
-
+        self.second = second
+    
     def run(self):
-        global count
-        temp = count + 1
-        time.sleep(0.001)
-        count = temp
+        print(f'Threading {threading.current_thread().name} is running')
+        print(f'Threading {threading.current_thread().name} sleep {self.second}s')
+        time.sleep(self.second)
+        print(f'Threading {threading.current_thread().name} is ended')
 
 
+print(f'Threading {threading.current_thread().name} is running')
 threads = []
-for _ in range(1000):
-    thread = MyThread()
-    thread.start()
+for i in [1, 5]:
+    thread = MyThread(i)
     threads.append(thread)
-
+    thread.start()
 for thread in threads:
     thread.join()
-print(f'Final count: {count}')
+print(f'Threading {threading.current_thread().name} is ended')

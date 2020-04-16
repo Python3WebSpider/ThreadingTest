@@ -10,8 +10,11 @@ def target(second):
 
 
 print(f'Threading {threading.current_thread().name} is running')
+threads = []
 for i in [1, 5]:
-    t = threading.Thread(target=target, args=[i])
-    t.start()
-    t.join()
+    thread = threading.Thread(target=target, args=[i])
+    threads.append(thread)
+    thread.start()
+for thread in threads:
+    thread.join()
 print(f'Threading {threading.current_thread().name} is ended')
